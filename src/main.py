@@ -1,9 +1,9 @@
 import pygame
 import os
 import datetime
-
-
-
+from algos.AStar import astar
+from algos.JPS import jps
+from utils import grid
 
 def main():
 
