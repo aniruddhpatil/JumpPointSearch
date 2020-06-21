@@ -1,4 +1,4 @@
-import math
+import math,time,heapq
 
 def heuristic(a, b, hchoice):
     if hchoice == 1:
@@ -199,3 +199,77 @@ def nodeNeighbours(cX, cY, parent, matrix):
             successors.append(jumpPoint)
 
     return successors
+    
+    def method(matrix, start, goal, hchoice):
+
+    came_from = {}
+    close_set = set()
+    gscore = {start: 0}
+    fscore = {start: heuristic(start, goal, hchoice)}
+
+    pqueue = []
+
+    heapq.heappush(pqueue, (fscore[start], start))
+
+    starttime = time.time()
+
+    while pqueue:
+
+        current = heapq.heappop(pqueue)[1]
+        if current == goal:
+            data = []
+            while current in came_from:
+                data.append(current)
+                current = came_from[current]
+            data.append(start)
+            data = data[::-1]
+            endtime = time.time()
+            #print(gscore[goal])
+            return (data, round(endtime - starttime, 6))
+
+        close_set.add(current)
+
+        successors = identifySuccessors(
+            current[0], current[1], came_from, matrix, goal
+        )
+
+        for successor in successors:
+            jumpPoint = successor
+
+            if (
+                jumpPoint in close_set
+            ):  # and tentative_g_score >= gscore.get(jumpPoint,0):
+                continue
+
+            tentative_g_score = gscore[current] + lenght(
+                current, jumpPoint, hchoice
+            )
+
+            if tentative_g_score < gscore.get(
+                jumpPoint, 0
+            ) or jumpPoint not in [j[1] for j in pqueue]:
+                came_from[jumpPoint] = current
+                gscore[jumpPoint] = tentative_g_score
+                fscore[jumpPoint] = tentative_g_score + heuristic(
+                    jumpPoint, goal, hchoice
+                )
+                heapq.heappush(pqueue, (fscore[jumpPoint], jumpPoint))
+        endtime = time.time()
+    return (0, round(endtime - starttime, 6))
+    def lenght(current, jumppoint, hchoice):
+    dX, dY = direction(current[0], current[1], jumppoint[0], jumppoint[1])
+    dX = math.fabs(dX)
+    dY = math.fabs(dY)
+    lX = math.fabs(current[0] - jumppoint[0])
+    lY = math.fabs(current[1] - jumppoint[1])
+    if hchoice == 1:
+        if dX != 0 and dY != 0:
+            lenght = lX * 14
+            return lenght
+        else:
+            lenght = (dX * lX + dY * lY) * 10
+            return lenght
+    if hchoice == 2:
+        return math.sqrt(
+            (current[0] - jumppoint[0]) ** 2 + (current[1] - jumppoint[1]) ** 2
+        )
