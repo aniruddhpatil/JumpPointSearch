@@ -1,4 +1,5 @@
 import numpy, pygame
+import os.path
 
 white = (255, 255, 255)
 lightgrey = (205, 205, 205)
@@ -65,8 +66,10 @@ class Grid:
         )
 
     def drawpath(self, path, main_layer, flag):
-        nowayfont = pygame.font.Font("myriadpro.otf", 25)
-        nowayfont1 = pygame.font.Font("myriadpro.otf", 25)
+        curr_dir = os.path.dirname(os.path.abspath(__file__))
+        file_name = os.path.join(curr_dir, "myriadpro.otf")
+        nowayfont = pygame.font.Font(file_name, 25)
+        nowayfont1 = pygame.font.Font(file_name, 25)
         if flag == 1:
             time = nowayfont.render("A*:" + str(path[1]), True, (34, 177, 86))
             time1 = nowayfont1.render(

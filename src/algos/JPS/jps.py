@@ -106,7 +106,7 @@ def nodeNeighbours(cX, cY, parent, matrix):
                     neighbours.append((cX + dX, cY - 1))
     return neighbours
 
-    def jump(cX, cY, dX, dY, matrix, goal):
+def jump(cX, cY, dX, dY, matrix, goal):
 
     nX = cX + dX
     nY = cY + dY
@@ -185,7 +185,7 @@ def nodeNeighbours(cX, cY, parent, matrix):
 
     return jump(nX, nY, dX, dY, matrix, goal)
     
-    def identifySuccessors(cX, cY, came_from, matrix, goal):
+def identifySuccessors(cX, cY, came_from, matrix, goal):
     successors = []
     neighbours = nodeNeighbours(cX, cY, came_from.get((cX, cY), 0), matrix)
 
@@ -200,7 +200,7 @@ def nodeNeighbours(cX, cY, parent, matrix):
 
     return successors
     
-    def method(matrix, start, goal, hchoice):
+def method(matrix, start, goal, hchoice):
 
     came_from = {}
     close_set = set()
@@ -256,7 +256,7 @@ def nodeNeighbours(cX, cY, parent, matrix):
                 heapq.heappush(pqueue, (fscore[jumpPoint], jumpPoint))
         endtime = time.time()
     return (0, round(endtime - starttime, 6))
-    def lenght(current, jumppoint, hchoice):
+def lenght(current, jumppoint, hchoice):
     dX, dY = direction(current[0], current[1], jumppoint[0], jumppoint[1])
     dX = math.fabs(dX)
     dY = math.fabs(dY)
