@@ -184,3 +184,18 @@ def nodeNeighbours(cX, cY, parent, matrix):
                     return (nX, oY)
 
     return jump(nX, nY, dX, dY, matrix, goal)
+    
+    def identifySuccessors(cX, cY, came_from, matrix, goal):
+    successors = []
+    neighbours = nodeNeighbours(cX, cY, came_from.get((cX, cY), 0), matrix)
+
+    for cell in neighbours:
+        dX = cell[0] - cX
+        dY = cell[1] - cY
+
+        jumpPoint = jump(cX, cY, dX, dY, matrix, goal)
+
+        if jumpPoint != None:
+            successors.append(jumpPoint)
+
+    return successors
